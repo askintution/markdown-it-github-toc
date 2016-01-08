@@ -23,13 +23,7 @@ var repeat = function repeat(string, num) {
 
 var uslug = require('uslug');
 var makeSafe = function makeSafe(string) {
-  var key = uslug(string);
-  // // url in lower case are cool
-  // .toLowerCase()
-  //
-  // // dashify
-  // .replace(/\W+/g, "-").replace(/^-+/, "").replace(/-+$/, "");
-
+  var key = uslug(string); // slugify
   if (!headingIds[key]) {
     headingIds[key] = 0;
   }
