@@ -21,13 +21,14 @@ var repeat = function repeat(string, num) {
   return new Array(num + 1).join(string);
 };
 
+var uslug = require('uslug');
 var makeSafe = function makeSafe(string) {
-  var key = string
-  // url in lower case are cool
-  .toLowerCase()
-
-  // dashify
-  .replace(/\W+/g, "-").replace(/^-+/, "").replace(/-+$/, "");
+  var key = uslug(string);
+  // // url in lower case are cool
+  // .toLowerCase()
+  //
+  // // dashify
+  // .replace(/\W+/g, "-").replace(/^-+/, "").replace(/-+$/, "");
 
   if (!headingIds[key]) {
     headingIds[key] = 0;
