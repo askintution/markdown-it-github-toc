@@ -29,6 +29,9 @@ var repeat = function repeat(string, num) {
 
 var makeSafe = function makeSafe(string) {
   var key = (0, _uslug2["default"])(string); // slugify
+  if (key === "") {
+    key = "a";
+  }
   if (!headingIds[key]) {
     headingIds[key] = 0;
   }
@@ -39,7 +42,7 @@ var makeSafe = function makeSafe(string) {
 var getAnchor = function getAnchor(token) {
   if (!token._tocAnchor) {
     token._tocAnchor = makeSafe(token.children.reduce(function (acc, t) {
-      return acc + t.content;
+      return acc + (t.content || "");
     }, ""));
   }
 

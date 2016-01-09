@@ -9,7 +9,10 @@ let headingIds = {}
 const repeat = (string, num) => new Array(num + 1).join(string)
 
 const makeSafe = (string) => {
-  const key = uslug(string) // slugify
+  var key = uslug(string) // slugify
+  if (key === "") {
+    key = "a"
+  }
   if (!headingIds[key]) {
     headingIds[key] = 0
   }
@@ -23,7 +26,7 @@ const getAnchor = (token) => {
   if (!token._tocAnchor) {
     token._tocAnchor = makeSafe(
       token.children
-        .reduce((acc, t) => acc + t.content, "")
+        .reduce((acc, t) => acc + (t.content || ""), "")
     )
   }
 
