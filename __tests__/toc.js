@@ -34,6 +34,25 @@ tape("markdown-it-toc-and-anchor toc", (t) => {
 
   t.equal(
     mdIt(
+      "# heading\n\n@[toc]",
+      {
+        toc: true,
+        anchorLink: false,
+      }
+    ),
+    `<h1 id="heading">heading</h1>
+<p>
+<ul class="markdownIt-TOC">
+  <li>
+    <a href="#heading">heading</a>
+  </li>
+</ul>
+</p>\n`,
+    "should works with one heading"
+  )
+
+  t.equal(
+    mdIt(
       "@[toc]",
       {
         toc: true,
