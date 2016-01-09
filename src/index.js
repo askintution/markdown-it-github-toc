@@ -114,6 +114,7 @@ export default function(md, options) {
     toc: true,
     tocClassName: "markdownIt-TOC",
     tocFirstLevel: 1,
+    tocLastLevel: 6,
     anchorLink: true,
     anchorLinkSymbol: "#",
     anchorLinkBefore: true,
@@ -237,7 +238,8 @@ export default function(md, options) {
       const tree = {nodes: []}
       // create an ast
       headings.forEach(heading => {
-        if (heading.level < options.tocFirstLevel) {
+        if (heading.level < options.tocFirstLevel
+            || heading.level > options.tocLastLevel) {
           return
         }
 
