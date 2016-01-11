@@ -31,7 +31,7 @@ markdownIt({
 
 (default: `true`)
 
-Allow you to enable/disable the toc transformation of `@[toc]`
+Allow you to enable/disable the toc transformation of `[toc]`
 
 #### `tocClassName`
 

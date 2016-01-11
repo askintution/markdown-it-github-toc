@@ -1,8 +1,8 @@
 import Token from "markdown-it/lib/token"
 import uslug from "uslug"
 
-var TOC = "@[toc]"
-var TOC_RE = /^@\[toc\]/im
+var TOC = "[toc]"
+var TOC_RE = /^\[toc\]/im
 
 let headingIds = {}
 
@@ -155,10 +155,8 @@ export default function(md, options) {
       }
 
       if (
-        // Reject if the token does not start with @[
-        state.src.charCodeAt(state.pos) !== 0x40 ||
-        state.src.charCodeAt(state.pos + 1) !== 0x5B ||
-
+        // Reject if the token does not start with [
+        state.src.charCodeAt(state.pos) !== 0x5B ||
         // Don’t run any pairs in validation mode
         silent
       ) {

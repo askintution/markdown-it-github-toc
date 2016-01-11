@@ -18,8 +18,8 @@ var _uslug = require("uslug");
 
 var _uslug2 = _interopRequireDefault(_uslug);
 
-var TOC = "@[toc]";
-var TOC_RE = /^@\[toc\]/im;
+var TOC = "[toc]";
+var TOC_RE = /^\[toc\]/im;
 
 var headingIds = {};
 
@@ -142,9 +142,8 @@ exports["default"] = function (md, options) {
     }
 
     if (
-    // Reject if the token does not start with @[
-    state.src.charCodeAt(state.pos) !== 0x40 || state.src.charCodeAt(state.pos + 1) !== 0x5B ||
-
+    // Reject if the token does not start with [
+    state.src.charCodeAt(state.pos) !== 0x5B ||
     // Don’t run any pairs in validation mode
     silent) {
       return false;

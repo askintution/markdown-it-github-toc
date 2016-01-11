@@ -14,7 +14,7 @@ tape("markdown-it-toc-and-anchor toc", (t) => {
 
   t.equal(
     mdIt(
-      "@[toc]"
+      "[toc]"
     ),
     `<p></p>\n`,
     "should do nothing if not asked to"
@@ -22,7 +22,7 @@ tape("markdown-it-toc-and-anchor toc", (t) => {
 
   t.equal(
     mdIt(
-      "@[toc]",
+      "[toc]",
       {toc: true}
     ),
     `<p>
@@ -34,7 +34,7 @@ tape("markdown-it-toc-and-anchor toc", (t) => {
 
   t.equal(
     mdIt(
-      "# heading\n\n@[toc]",
+      "# heading\n\n[toc]",
       {
         toc: true,
         anchorLink: false,
@@ -53,7 +53,7 @@ tape("markdown-it-toc-and-anchor toc", (t) => {
 
   t.equal(
     mdIt(
-      "@[toc]",
+      "[toc]",
       {
         toc: true,
         tocClassName: "test",
@@ -68,7 +68,7 @@ tape("markdown-it-toc-and-anchor toc", (t) => {
 
   t.equal(
     mdIt(
-      `@[toc]
+      `[toc]
 # 新年快乐`,
       {
         toc: true,
@@ -87,7 +87,7 @@ tape("markdown-it-toc-and-anchor toc", (t) => {
 
   t.equal(
     mdIt(
-      `@[toc]
+      `[toc]
 # Heading`,
       {
         toc: true,
@@ -112,7 +112,7 @@ tape("markdown-it-toc-and-anchor toc", (t) => {
 
   t.equal(
     mdIt(
-      `@[toc]
+      `[toc]
 # Heading
 ## Two
 ### Three
@@ -143,7 +143,7 @@ tape("markdown-it-toc-and-anchor toc", (t) => {
 
   t.equal(
     mdIt(
-      `@[toc]
+      `[toc]
 # Heading
 # Heading`,
       {toc: true}
@@ -165,7 +165,7 @@ tape("markdown-it-toc-and-anchor toc", (t) => {
 
   t.equal(
     mdIt(
-      `@[toc]
+      `[toc]
 # 'Heading' ?
 # $.lel!
 # $.lel?
@@ -193,7 +193,7 @@ tape("markdown-it-toc-and-anchor toc", (t) => {
 
   t.equal(
     mdIt(
-      `@[toc]
+      `[toc]
 ### a
 # b
 `,
@@ -224,7 +224,7 @@ tape("markdown-it-toc-and-anchor toc", (t) => {
 
   t.equal(
     mdIt(
-      `@[toc]
+      `[toc]
 # Heading 1
 ## SubHeading
 # Heading 2

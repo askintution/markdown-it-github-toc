@@ -4,7 +4,7 @@ import mdIt from "./utils/md-it"
 tape("markdown-it-toc-and-anchor option: indentation", (t) => {
   t.equal(
     mdIt(
-      `@[toc]
+      `[toc]
 # Heading 1
 `,
       {

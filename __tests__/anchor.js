@@ -5,7 +5,7 @@ tape("markdown-it-toc-and-anchor anchor", (t) => {
 
   t.equal(
     mdIt(
-      `@[toc](Title)
+      `[toc](Title)
 # 'Heading' ?
 # $.lel!
 # $.lel?
