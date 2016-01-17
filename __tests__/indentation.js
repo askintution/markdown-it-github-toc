@@ -1,7 +1,7 @@
 import tape from "tape"
 import mdIt from "./utils/md-it"
 
-tape("markdown-it-toc-and-anchor option: indentation", (t) => {
+tape("markdown-it-github-toc option: indentation", (t) => {
   t.equal(
     mdIt(
       `[toc]

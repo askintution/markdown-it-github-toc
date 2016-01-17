@@ -1,5 +1,5 @@
 {
-  "name": "markdown-it-toc-and-anchor",
+  "name": "markdown-it-github-toc",
   "version": "2.0.0",
   "description": "markdown-it plugin to add toc and anchor links in headings",
   "keywords": [
@@ -11,7 +11,7 @@
   ],
   "author": "Maxime Thirouin",
   "license": "MIT",
-  "repository": "https://github.com/MoOx/markdown-it-toc-and-anchor.git",
+  "repository": "https://github.com/tylingsoft/markdown-it-github-toc.git",
   "main": "dist/index.js",
   "dependencies": {
     "markdown-it": "^5.0.0",

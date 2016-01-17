@@ -1,7 +1,7 @@
 import tape from "tape"
 import mdIt from "./utils/md-it"
 
-tape("markdown-it-toc-and-anchor toc", (t) => {
+tape("markdown-it-github-toc toc", (t) => {
 
   t.equal(
     mdIt(

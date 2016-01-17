@@ -1,29 +1,32 @@
-# markdown-it-toc-and-anchor [![Travis Build Status](https://travis-ci.org/MoOx/markdown-it-toc-and-anchor.svg)](https://travis-ci.org/MoOx/markdown-it-toc-and-anchor)
+# markdown-it-github-toc
 
-> markdown-it plugin to add toc and anchor links in headings
+markdown-it plugin to add toc and GitHub style heading anchors
+
 
 ## Installation
 
 ```console
-$ npm install markdown-it-toc-and-anchor
+$ npm install markdown-it-github-toc
 ```
+
 
 ## Usage
 
 ```js
 import markdownIt from "markdown-it"
-import markdownItTocAndAnchor from "markdown-it-toc-and-anchor"
+import markdownItGithubToc from "markdown-it-github-toc"
 
 markdownIt({
     html: true,
     linkify: true,
     typography: true,
   })
-    .use(markdownItTocAndAnchor, {
+    .use(markdownItGithubToc, {
       // ...options
     })
     .render(md)
 ```
+
 
 ### Options
 
@@ -102,8 +105,7 @@ documents on the same page.
 
 Allow you to customize indentation
 
----
 
-## [Changelog](CHANGELOG.md)
+## License
 
-## [License](LICENSE)
+MIT
