@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-github-toc",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "markdown-it plugin to add toc and anchor links in headings",
   "keywords": [
     "makrdown-it",
@@ -14,7 +14,6 @@
   "repository": "https://github.com/tylingsoft/markdown-it-github-toc.git",
   "main": "dist/index.js",
   "dependencies": {
-    "markdown-it": "^5.0.0",
     "uslug": "^1.0.3"
   },
   "devDependencies": {
@@ -22,12 +21,13 @@
     "babel-eslint": "^3.1.9",
     "babel-tape-runner": "^1.1.0",
     "eslint": "^0.22.1",
-    "tape": "^4.0.0"
+    "tape": "^4.0.0",
+    "markdown-it": "^5.0.0"
   },
   "scripts": {
     "lint": "eslint .",
     "tape": "babel-tape-runner '__tests__/*.js'",
     "test": "npm run lint && npm run tape",
-    "prepublish": "babel src --out-dir dist"
+    "prepublish": "babel --ignore __tests__ src --out-dir dist"
   }
 }

@@ -10,13 +10,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
 
-var _markdownItLibToken = require("markdown-it/lib/token");
-
-var _markdownItLibToken2 = _interopRequireDefault(_markdownItLibToken);
-
 var _uslug = require("uslug");
 
 var _uslug2 = _interopRequireDefault(_uslug);
+
+var Token = function Token() {};
 
 var TOC = "[toc]";
 var TOC_RE = /^\[toc\]/im;
@@ -50,18 +48,18 @@ var getAnchor = function getAnchor(token) {
 };
 
 var space = function space() {
-  return _extends({}, new _markdownItLibToken2["default"]("text", "", 0), { content: " " });
+  return _extends({}, new Token("text", "", 0), { content: " " });
 };
 
 var renderAnchorLinkSymbol = function renderAnchorLinkSymbol(options) {
   if (options.anchorLinkSymbolClassName) {
-    return [_extends({}, new _markdownItLibToken2["default"]("span_open", "span", 1), {
+    return [_extends({}, new Token("span_open", "span", 1), {
       attrs: [["class", options.anchorLinkSymbolClassName]]
-    }), _extends({}, new _markdownItLibToken2["default"]("text", "", 0), {
+    }), _extends({}, new Token("text", "", 0), {
       content: options.anchorLinkSymbol
-    }), new _markdownItLibToken2["default"]("span_close", "span", -1)];
+    }), new Token("span_close", "span", -1)];
   } else {
-    return [_extends({}, new _markdownItLibToken2["default"]("text", "", 0), {
+    return [_extends({}, new Token("text", "", 0), {
       content: options.anchorLinkSymbol
     })];
   }
@@ -70,9 +68,9 @@ var renderAnchorLinkSymbol = function renderAnchorLinkSymbol(options) {
 var renderAnchorLink = function renderAnchorLink(anchor, options, tokens, idx) {
   var _tokens$children;
 
-  var linkTokens = [_extends({}, new _markdownItLibToken2["default"]("link_open", "a", 1), {
+  var linkTokens = [_extends({}, new Token("link_open", "a", 1), {
     attrs: [["class", options.anchorClassName], ["href", "#" + anchor]]
-  })].concat(_toConsumableArray(renderAnchorLinkSymbol(options)), [new _markdownItLibToken2["default"]("link_close", "a", -1)]);
+  })].concat(_toConsumableArray(renderAnchorLinkSymbol(options)), [new Token("link_close", "a", -1)]);
 
   // `push` or `unshift` according to anchorLinkBefore option
   // space is at the opposite side.
@@ -121,15 +119,19 @@ exports["default"] = function (md, options) {
 
   var gstate = undefined;
 
-  md.core.ruler.push("grab_state", function (state) {
-    gstate = state;
-  });
+  // reset keys id for each instance
+  headingIds = {};
 
-  md.inline.ruler.after("emphasis", "toc", function (state, silent) {
+  md.core.ruler.push("grab_state_and_token", function (state) {
+    gstate = state;
+    Token = state.Token;
     // reset keys id for each document
     if (options.resetIds) {
       headingIds = {};
     }
+  });
+
+  md.inline.ruler.after("emphasis", "toc", function (state, silent) {
 
     var token = undefined;
     var match = undefined;

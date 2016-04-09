@@ -1,5 +1,6 @@
-import Token from "markdown-it/lib/token"
 import uslug from "uslug"
+
+let Token = () => {}
 
 var TOC = "[toc]"
 var TOC_RE = /^\[toc\]/im
@@ -128,18 +129,22 @@ export default function(md, options) {
 
   let gstate
 
-  md.core.ruler.push("grab_state", function(state) {
+  // reset keys id for each instance
+  headingIds = {}
+
+  md.core.ruler.push("grab_state_and_token", function(state) {
     gstate = state
+    Token = state.Token
+    // reset keys id for each document
+    if (options.resetIds) {
+      headingIds = {}
+    }
   })
 
   md.inline.ruler.after(
     "emphasis",
     "toc",
     (state, silent) => {
-      // reset keys id for each document
-      if (options.resetIds) {
-        headingIds = {}
-      }
 
       let token
       let match
