@@ -156,6 +156,8 @@ export default function(md, options) {
         if (state.tokens.slice(-1)[0] && state.tokens.slice(-1)[0].type === "softbreak") {
           state.src = state.src.split("\n").slice(1).join("\n")
           state.pos = 0
+        } else {
+          break
         }
       }
 
