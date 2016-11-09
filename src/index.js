@@ -3,7 +3,7 @@ import uslug from "uslug"
 let Token = () => {}
 
 var TOC = "[toc]"
-var TOC_RE = /^\[toc\]/im
+var TOC_RE = /^\[toc\]$/im
 
 let headingIds = {}
 

@@ -17,7 +17,7 @@ var _uslug2 = _interopRequireDefault(_uslug);
 var Token = function Token() {};
 
 var TOC = "[toc]";
-var TOC_RE = /^\[toc\]/im;
+var TOC_RE = /^\[toc\]$/im;
 
 var headingIds = {};
 
