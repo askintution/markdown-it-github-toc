@@ -68,8 +68,14 @@ var renderAnchorLinkSymbol = function renderAnchorLinkSymbol(options) {
 var renderAnchorLink = function renderAnchorLink(anchor, options, tokens, idx) {
   var _tokens$children;
 
+  var hrefAttr = "href";
+  var hrefVal = "#" + anchor;
+  if (options.uiRouterLinks) {
+    hrefAttr = "ui-sref";
+    hrefVal = "{'#':'" + anchor + "'}";
+  }
   var linkTokens = [_extends({}, new Token("link_open", "a", 1), {
-    attrs: [["class", options.anchorClassName], ["href", "#" + anchor]]
+    attrs: [["class", options.anchorClassName], [hrefAttr, hrefVal]]
   })].concat(_toConsumableArray(renderAnchorLinkSymbol(options)), [new Token("link_close", "a", -1)]);
 
   // `push` or `unshift` according to anchorLinkBefore option
@@ -91,7 +97,11 @@ var treeToString = function treeToString(tree, options) {
   return tree.map(function (item) {
     var node = "\n" + repeat(options.indentation, indent) + "<li>";
     if (item.heading.content) {
-      node += "\n" + repeat(options.indentation, indent + 1) + ("<a href=\"#" + item.heading.anchor + "\">" + item.heading.content + "</a>");
+      if (!options.uiRouterLinks) {
+        node += "\n" + repeat(options.indentation, indent + 1) + ("<a href=\"#" + item.heading.anchor + "\">" + item.heading.content + "</a>");
+      } else {
+        node += "\n" + repeat(options.indentation, indent + 1) + ("<a ui-sref=\"{'#':'" + item.heading.anchor + "'}\">" + item.heading.content + "</a>");
+      }
     }
     if (item.nodes.length) {
       node += "\n" + repeat(options.indentation, indent + 1) + "<ul>" + treeToString(item.nodes, options, indent + 2) + ("\n" + repeat(options.indentation, indent + 1)) + "</ul>";
@@ -114,7 +124,8 @@ exports["default"] = function (md, options) {
     resetIds: true,
     indentation: "  ",
     anchorLinkSpace: true,
-    anchorLinkSymbolClassName: null
+    anchorLinkSymbolClassName: null,
+    uiRouterLinks: false
   }, options);
 
   var gstate = undefined;
