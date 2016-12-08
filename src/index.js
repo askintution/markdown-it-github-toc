@@ -65,12 +65,18 @@ const renderAnchorLinkSymbol = (options) => {
 }
 
 const renderAnchorLink = (anchor, options, tokens, idx) => {
+  var hrefAttr = "href"
+  var hrefVal = `#${anchor}`
+  if (options.uiRouterLinks) {
+	hrefAttr = "ui-sref"
+	hrefVal = `{'#':'${anchor}'}`
+  }
   const linkTokens = [
     {
       ...(new Token("link_open", "a", 1)),
       attrs: [
         ["class", options.anchorClassName],
-        ["href", `#${anchor}`],
+        [hrefAttr, hrefVal],
       ],
     },
     ...(renderAnchorLinkSymbol(options)),
@@ -96,8 +102,14 @@ const renderAnchorLink = (anchor, options, tokens, idx) => {
 const treeToString = (tree, options, indent = 1) => tree.map(item => {
   let node = `\n${ repeat(options.indentation, indent) }<li>`
   if (item.heading.content) {
-    node += `\n${ repeat(options.indentation, indent + 1) }` +
-      `<a href="#${ item.heading.anchor }">${ item.heading.content }</a>`
+	if (!options.uiRouterLinks) {
+	  node += `\n${ repeat(options.indentation, indent + 1) }` +
+		`<a href="#${ item.heading.anchor }">${ item.heading.content }</a>`
+	}
+	else {
+	  node += `\n${ repeat(options.indentation, indent + 1) }` +
+		`<a ui-sref="{'#':'${ item.heading.anchor }'}">${ item.heading.content }</a>`
+	}
   }
   if (item.nodes.length) {
     node += `\n${ repeat(options.indentation, indent + 1) }` +
@@ -124,6 +136,7 @@ export default function(md, options) {
     indentation: "  ",
     anchorLinkSpace: true,
     anchorLinkSymbolClassName: null,
+	uiRouterLinks: false,
     ...options,
   }
 
