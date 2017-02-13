@@ -12,12 +12,10 @@ tape("markdown-it-github-toc anchor", (t) => {
 `,
       {anchorLink: true}
     ),
-/* eslint-disable max-len */
   `<p></p>
 <h1 id="heading"><a class="markdownIt-Anchor" href="#heading">#</a> 'Heading' ?</h1>
 <h1 id="lel"><a class="markdownIt-Anchor" href="#lel">#</a> $.lel!</h1>
 <h1 id="lel-2"><a class="markdownIt-Anchor" href="#lel-2">#</a> $.lel?</h1>\n`,
-/* eslint-enable max-len */
     "should add anchors"
   )
 

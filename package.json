@@ -18,16 +18,13 @@
   },
   "devDependencies": {
     "babel": "^5.4.7",
-    "babel-eslint": "^3.1.9",
     "babel-tape-runner": "^1.1.0",
-    "eslint": "^0.22.1",
-    "tape": "^4.0.0",
-    "markdown-it": "^5.0.0"
+    "markdown-it": "^5.0.0",
+    "tape": "^4.0.0"
   },
   "scripts": {
-    "lint": "eslint .",
     "tape": "babel-tape-runner '__tests__/*.js'",
-    "test": "npm run lint && npm run tape",
+    "test": "npm run tape",
     "prepublish": "babel --ignore __tests__ src --out-dir dist"
   }
 }
