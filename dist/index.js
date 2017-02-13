@@ -6,112 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
-
-var _uslug = require("uslug");
-
-var _uslug2 = _interopRequireDefault(_uslug);
-
-var Token = function Token() {};
-
-var TOC = "[toc]";
-var TOC_RE = /^\[toc\]$/im;
-
-var headingIds = {};
-
-var repeat = function repeat(string, num) {
-  return new Array(num + 1).join(string);
-};
-
-var makeSafe = function makeSafe(string) {
-  var key = (0, _uslug2["default"])(string); // slugify
-  if (key === "") {
-    key = "a";
-  }
-  if (!headingIds[key]) {
-    headingIds[key] = 0;
-  }
-  headingIds[key]++;
-  return key + (headingIds[key] > 1 ? "-" + headingIds[key] : "");
-};
-
-var getAnchor = function getAnchor(token) {
-  if (!token._tocAnchor) {
-    token._tocAnchor = makeSafe(token.children.reduce(function (acc, t) {
-      return acc + (t.content || "");
-    }, ""));
-  }
-
-  return token._tocAnchor;
-};
-
-var space = function space() {
-  return _extends({}, new Token("text", "", 0), { content: " " });
-};
-
-var renderAnchorLinkSymbol = function renderAnchorLinkSymbol(options) {
-  if (options.anchorLinkSymbolClassName) {
-    return [_extends({}, new Token("span_open", "span", 1), {
-      attrs: [["class", options.anchorLinkSymbolClassName]]
-    }), _extends({}, new Token("text", "", 0), {
-      content: options.anchorLinkSymbol
-    }), new Token("span_close", "span", -1)];
-  } else {
-    return [_extends({}, new Token("text", "", 0), {
-      content: options.anchorLinkSymbol
-    })];
-  }
-};
-
-var renderAnchorLink = function renderAnchorLink(anchor, options, tokens, idx) {
-  var _tokens$children;
-
-  var hrefAttr = "href";
-  var hrefVal = "#" + anchor;
-  if (options.uiRouterLinks) {
-    hrefAttr = "ui-sref";
-    hrefVal = "{'#':'" + anchor + "'}";
-  }
-  var linkTokens = [_extends({}, new Token("link_open", "a", 1), {
-    attrs: [["class", options.anchorClassName], [hrefAttr, hrefVal]]
-  })].concat(_toConsumableArray(renderAnchorLinkSymbol(options)), [new Token("link_close", "a", -1)]);
-
-  // `push` or `unshift` according to anchorLinkBefore option
-  // space is at the opposite side.
-  var actionOnArray = {
-    "false": "push",
-    "true": "unshift"
-  };
-
-  // insert space between anchor link and heading ?
-  if (options.anchorLinkSpace) {
-    linkTokens[actionOnArray[!options.anchorLinkBefore]](space());
-  }
-  (_tokens$children = tokens[idx + 1].children)[actionOnArray[options.anchorLinkBefore]].apply(_tokens$children, _toConsumableArray(linkTokens));
-};
-
-var treeToString = function treeToString(tree, options) {
-  var indent = arguments.length <= 2 || arguments[2] === undefined ? 1 : arguments[2];
-  return tree.map(function (item) {
-    var node = "\n" + repeat(options.indentation, indent) + "<li>";
-    if (item.heading.content) {
-      if (!options.uiRouterLinks) {
-        node += "\n" + repeat(options.indentation, indent + 1) + ("<a href=\"#" + item.heading.anchor + "\">" + item.heading.content + "</a>");
-      } else {
-        node += "\n" + repeat(options.indentation, indent + 1) + ("<a ui-sref=\"{'#':'" + item.heading.anchor + "'}\">" + item.heading.content + "</a>");
-      }
-    }
-    if (item.nodes.length) {
-      node += "\n" + repeat(options.indentation, indent + 1) + "<ul>" + treeToString(item.nodes, options, indent + 2) + ("\n" + repeat(options.indentation, indent + 1)) + "</ul>";
-    }
-    node += "\n" + repeat(options.indentation, indent) + "</li>";
-    return node;
-  }).join("");
-};
-
-exports["default"] = function (md, options) {
+exports.default = function (md, options) {
   options = _extends({
     toc: true,
     tocClassName: "markdownIt-TOC",
@@ -128,7 +23,7 @@ exports["default"] = function (md, options) {
     uiRouterLinks: false
   }, options);
 
-  var gstate = undefined;
+  var gstate = void 0;
 
   // reset keys id for each instance
   headingIds = {};
@@ -144,8 +39,8 @@ exports["default"] = function (md, options) {
 
   md.inline.ruler.after("emphasis", "toc", function (state, silent) {
 
-    var token = undefined;
-    var match = undefined;
+    var token = void 0;
+    var match = void 0;
 
     while (state.src.indexOf("\n") >= 0 && state.src.indexOf("\n") < state.src.indexOf(TOC)) {
       if (state.tokens.slice(-1)[0] && state.tokens.slice(-1)[0].type === "softbreak") {
@@ -196,9 +91,10 @@ exports["default"] = function (md, options) {
       args[_key] = arguments[_key];
     }
 
-    var tokens = args[0];
-    var idx = args[1];
-    var self = args[4];
+    var tokens = args[0],
+        idx = args[1],
+        self = args[4];
+
 
     var attrs = tokens[idx].attrs = tokens[idx].attrs || [];
     var anchor = getAnchor(tokens[idx + 1]);
@@ -274,4 +170,107 @@ exports["default"] = function (md, options) {
   }
 };
 
-module.exports = exports["default"];
+var _uslug = require("uslug");
+
+var _uslug2 = _interopRequireDefault(_uslug);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var Token = function Token() {};
+
+var TOC = "[toc]";
+var TOC_RE = /^\[toc\]$/im;
+
+var headingIds = {};
+
+var repeat = function repeat(string, num) {
+  return new Array(num + 1).join(string);
+};
+
+var makeSafe = function makeSafe(string) {
+  var key = (0, _uslug2.default)(string); // slugify
+  if (key === "") {
+    key = "a";
+  }
+  if (!headingIds[key]) {
+    headingIds[key] = 0;
+  }
+  headingIds[key]++;
+  return key + (headingIds[key] > 1 ? "-" + headingIds[key] : "");
+};
+
+var getAnchor = function getAnchor(token) {
+  if (!token._tocAnchor) {
+    token._tocAnchor = makeSafe(token.children.reduce(function (acc, t) {
+      return acc + (t.content || "");
+    }, ""));
+  }
+
+  return token._tocAnchor;
+};
+
+var space = function space() {
+  return _extends({}, new Token("text", "", 0), { content: " " });
+};
+
+var renderAnchorLinkSymbol = function renderAnchorLinkSymbol(options) {
+  if (options.anchorLinkSymbolClassName) {
+    return [_extends({}, new Token("span_open", "span", 1), {
+      attrs: [["class", options.anchorLinkSymbolClassName]]
+    }), _extends({}, new Token("text", "", 0), {
+      content: options.anchorLinkSymbol
+    }), new Token("span_close", "span", -1)];
+  } else {
+    return [_extends({}, new Token("text", "", 0), {
+      content: options.anchorLinkSymbol
+    })];
+  }
+};
+
+var renderAnchorLink = function renderAnchorLink(anchor, options, tokens, idx) {
+  var _tokens$children;
+
+  var hrefAttr = "href";
+  var hrefVal = "#" + anchor;
+  if (options.uiRouterLinks) {
+    hrefAttr = "ui-sref";
+    hrefVal = "{'#':'" + anchor + "'}";
+  }
+  var linkTokens = [_extends({}, new Token("link_open", "a", 1), {
+    attrs: [["class", options.anchorClassName], [hrefAttr, hrefVal]]
+  })].concat(_toConsumableArray(renderAnchorLinkSymbol(options)), [new Token("link_close", "a", -1)]);
+
+  // `push` or `unshift` according to anchorLinkBefore option
+  // space is at the opposite side.
+  var actionOnArray = {
+    false: "push",
+    true: "unshift"
+  };
+
+  // insert space between anchor link and heading ?
+  if (options.anchorLinkSpace) {
+    linkTokens[actionOnArray[!options.anchorLinkBefore]](space());
+  }
+  (_tokens$children = tokens[idx + 1].children)[actionOnArray[options.anchorLinkBefore]].apply(_tokens$children, _toConsumableArray(linkTokens));
+};
+
+var treeToString = function treeToString(tree, options) {
+  var indent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+  return tree.map(function (item) {
+    var node = "\n" + repeat(options.indentation, indent) + "<li>";
+    if (item.heading.content) {
+      if (!options.uiRouterLinks) {
+        node += "\n" + repeat(options.indentation, indent + 1) + ("<a href=\"#" + item.heading.anchor + "\">" + item.heading.content + "</a>");
+      } else {
+        node += "\n" + repeat(options.indentation, indent + 1) + ("<a ui-sref=\"{'#':'" + item.heading.anchor + "'}\">" + item.heading.content + "</a>");
+      }
+    }
+    if (item.nodes.length) {
+      node += "\n" + repeat(options.indentation, indent + 1) + "<ul>" + treeToString(item.nodes, options, indent + 2) + ("\n" + repeat(options.indentation, indent + 1)) + "</ul>";
+    }
+    node += "\n" + repeat(options.indentation, indent) + "</li>";
+    return node;
+  }).join("");
+};
