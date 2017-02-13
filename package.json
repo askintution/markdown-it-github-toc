@@ -1,11 +1,11 @@
 {
   "name": "markdown-it-github-toc",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "markdown-it plugin to add toc and anchor links in headings",
   "keywords": [
     "makrdown-it",
     "makrdown-it-plugin",
-    "makrdown",
+    "markdown",
     "toc",
     "anchor"
   ],
@@ -24,8 +24,8 @@
     "tape": "^4.0.0"
   },
   "scripts": {
-    "tape": "babel-tape-runner '__tests__/*.js'",
+    "tape": "babel-tape-runner 'test/*.js'",
     "test": "npm run tape",
-    "prepublish": "babel --ignore __tests__ src --out-dir dist"
+    "prepublish": "babel --ignore test src --out-dir dist"
   }
 }
