@@ -1,9 +1,9 @@
-import uslug from "uslug"
+import uslug from 'uslug'
 
-let Token = () => {}
+let Token = () => { }
 
-var TOC = "[toc]"
-var TOC_RE = /^\[toc\]$/im
+var TOC = '[toc]'
+var TOC_RE = /^\[toc]$/im
 
 let headingIds = {}
 
@@ -11,15 +11,15 @@ const repeat = (string, num) => new Array(num + 1).join(string)
 
 const makeSafe = (string) => {
   var key = uslug(string) // slugify
-  if (key === "") {
-    key = "a"
+  if (key === '') {
+    key = 'a'
   }
   if (!headingIds[key]) {
     headingIds[key] = 0
   }
   headingIds[key]++
   return key + (
-    headingIds[key] > 1 ? `-${headingIds[key]}` : ""
+    headingIds[key] > 1 ? `-${headingIds[key]}` : ''
   )
 }
 
@@ -27,7 +27,7 @@ const getAnchor = (token) => {
   if (!token._tocAnchor) {
     token._tocAnchor = makeSafe(
       token.children
-        .reduce((acc, t) => acc + (t.content || ""), "")
+        .reduce((acc, t) => acc + (t.content || ''), '')
     )
   }
 
@@ -35,109 +35,105 @@ const getAnchor = (token) => {
 }
 
 const space = () => {
-  return {...(new Token("text", "", 0)), content: " "}
+  return { ...(new Token('text', '', 0)), content: ' ' }
 }
 
 const renderAnchorLinkSymbol = (options) => {
   if (options.anchorLinkSymbolClassName) {
     return [
       {
-        ...(new Token("span_open", "span", 1)),
+        ...(new Token('span_open', 'span', 1)),
         attrs: [
-          ["class", options.anchorLinkSymbolClassName],
-        ],
+          ['class', options.anchorLinkSymbolClassName]
+        ]
       },
       {
-        ...(new Token("text", "", 0)),
-        content: options.anchorLinkSymbol,
+        ...(new Token('text', '', 0)),
+        content: options.anchorLinkSymbol
       },
-      new Token("span_close", "span", -1),
+      new Token('span_close', 'span', -1)
     ]
-  }
-  else {
+  } else {
     return [
       {
-      ...(new Token("text", "", 0)),
-      content: options.anchorLinkSymbol,
-      },
+        ...(new Token('text', '', 0)),
+        content: options.anchorLinkSymbol
+      }
     ]
   }
 }
 
 const renderAnchorLink = (anchor, options, tokens, idx) => {
-  var hrefAttr = "href"
+  var hrefAttr = 'href'
   var hrefVal = `#${anchor}`
   if (options.uiRouterLinks) {
-	hrefAttr = "ui-sref"
-	hrefVal = `{'#':'${anchor}'}`
+    hrefAttr = 'ui-sref'
+    hrefVal = `{'#':'${anchor}'}`
   }
   const linkTokens = [
     {
-      ...(new Token("link_open", "a", 1)),
+      ...(new Token('link_open', 'a', 1)),
       attrs: [
-        ["class", options.anchorClassName],
-        [hrefAttr, hrefVal],
-      ],
+        ['class', options.anchorClassName],
+        [hrefAttr, hrefVal]
+      ]
     },
     ...(renderAnchorLinkSymbol(options)),
-    new Token("link_close", "a", -1),
+    new Token('link_close', 'a', -1)
   ]
 
   // `push` or `unshift` according to anchorLinkBefore option
   // space is at the opposite side.
   const actionOnArray = {
-    false: "push",
-    true: "unshift",
+    false: 'push',
+    true: 'unshift'
   }
 
   // insert space between anchor link and heading ?
   if (options.anchorLinkSpace) {
     linkTokens[actionOnArray[!options.anchorLinkBefore]](space())
   }
-  tokens[idx + 1].children[
-    actionOnArray[options.anchorLinkBefore]
-  ](...linkTokens)
+  tokens[idx + 1].children[actionOnArray[options.anchorLinkBefore]](...linkTokens)
 }
 
 const treeToString = (tree, options, indent = 1) => tree.map(item => {
-  let node = `\n${ repeat(options.indentation, indent) }<li>`
+  let node = `\n${repeat(options.indentation, indent)}<li>`
   if (item.heading.content) {
-	if (!options.uiRouterLinks) {
-	  node += `\n${ repeat(options.indentation, indent + 1) }` +
-		`<a href="#${ item.heading.anchor }">${ item.heading.content }</a>`
-	}
-	else {
-	  node += `\n${ repeat(options.indentation, indent + 1) }` +
-		`<a ui-sref="{'#':'${ item.heading.anchor }'}">${ item.heading.content }</a>`
-	}
+    if (!options.uiRouterLinks) {
+      node += `\n${repeat(options.indentation, indent + 1)}` +
+        `<a href="#${item.heading.anchor}">${item.heading.content}</a>`
+    } else {
+      node += `\n${repeat(options.indentation, indent + 1)}` +
+        `<a ui-sref="{'#':'${item.heading.anchor}'}">${item.heading.content}</a>`
+    }
   }
   if (item.nodes.length) {
-    node += `\n${ repeat(options.indentation, indent + 1) }` +
+    node += `\n${repeat(options.indentation, indent + 1)}` +
       `<ul>` +
       treeToString(item.nodes, options, indent + 2) +
-      `\n${ repeat(options.indentation, indent + 1) }` +
+      `\n${repeat(options.indentation, indent + 1)}` +
       `</ul>`
   }
-  node += `\n${ repeat(options.indentation, indent) }</li>`
+  node += `\n${repeat(options.indentation, indent)}</li>`
   return node
-}).join("")
+}).join('')
 
-export default function(md, options) {
+export default function (md, options) {
   options = {
     toc: true,
-    tocClassName: "markdownIt-TOC",
+    tocClassName: 'markdownIt-TOC',
     tocFirstLevel: 1,
     tocLastLevel: 6,
     anchorLink: true,
-    anchorLinkSymbol: "#",
+    anchorLinkSymbol: '#',
     anchorLinkBefore: true,
-    anchorClassName: "markdownIt-Anchor",
+    anchorClassName: 'markdownIt-Anchor',
     resetIds: true,
-    indentation: "  ",
+    indentation: '  ',
     anchorLinkSpace: true,
     anchorLinkSymbolClassName: null,
-	uiRouterLinks: false,
-    ...options,
+    uiRouterLinks: false,
+    ...options
   }
 
   let gstate
@@ -145,7 +141,7 @@ export default function(md, options) {
   // reset keys id for each instance
   headingIds = {}
 
-  md.core.ruler.push("grab_state_and_token", function(state) {
+  md.core.ruler.push('grab_state_and_token', function (state) {
     gstate = state
     Token = state.Token
     // reset keys id for each document
@@ -155,19 +151,18 @@ export default function(md, options) {
   })
 
   md.inline.ruler.after(
-    "emphasis",
-    "toc",
+    'emphasis',
+    'toc',
     (state, silent) => {
-
       let token
       let match
 
       while (
-        state.src.indexOf("\n") >= 0 &&
-        state.src.indexOf("\n") < state.src.indexOf(TOC)
+        state.src.indexOf('\n') >= 0 &&
+        state.src.indexOf('\n') < state.src.indexOf(TOC)
       ) {
-        if (state.tokens.slice(-1)[0] && state.tokens.slice(-1)[0].type === "softbreak") {
-          state.src = state.src.split("\n").slice(1).join("\n")
+        if (state.tokens.slice(-1)[0] && state.tokens.slice(-1)[0].type === 'softbreak') {
+          state.src = state.src.split('\n').slice(1).join('\n')
           state.pos = 0
         } else {
           break
@@ -191,17 +186,16 @@ export default function(md, options) {
       }
 
       // Build content
-      token = state.push("toc_open", "toc", 1)
+      token = state.push('toc_open', 'toc', 1)
       token.markup = TOC
-      token = state.push("toc_body", "", 0)
-      token = state.push("toc_close", "toc", -1)
+      token = state.push('toc_body', '', 0)
+      token = state.push('toc_close', 'toc', -1)
 
       // Update pos so the parser can continue
-      var newline = state.src.indexOf("\n")
+      var newline = state.src.indexOf('\n')
       if (newline !== -1) {
         state.pos = state.pos + newline
-      }
-      else {
+      } else {
         state.pos = state.pos + state.posMax + 1
       }
 
@@ -210,12 +204,12 @@ export default function(md, options) {
   )
 
   const originalHeadingOpen = md.renderer.rules.heading_open
-  md.renderer.rules.heading_open = function(...args) {
-    const [ tokens, idx, , , self ] = args
+  md.renderer.rules.heading_open = function (...args) {
+    const [tokens, idx, , , self] = args
 
     const attrs = tokens[idx].attrs = tokens[idx].attrs || []
     const anchor = getAnchor(tokens[idx + 1])
-    attrs.push(["id", anchor])
+    attrs.push(['id', anchor])
 
     if (options.anchorLink) {
       renderAnchorLink(anchor, options, ...args)
@@ -223,41 +217,39 @@ export default function(md, options) {
 
     if (originalHeadingOpen) {
       return originalHeadingOpen.apply(this, args)
-    }
-    else {
+    } else {
       return self.renderToken(...args)
     }
   }
 
-  md.renderer.rules.toc_open = () => ""
-  md.renderer.rules.toc_close = () => ""
-  md.renderer.rules.toc_body = () => ""
+  md.renderer.rules.toc_open = () => ''
+  md.renderer.rules.toc_close = () => ''
+  md.renderer.rules.toc_body = () => ''
 
   if (options.toc) {
-    md.renderer.rules.toc_body = function() {
+    md.renderer.rules.toc_body = function () {
       const headings = []
       const gtokens = gstate.tokens
 
       for (let i = 0; i < gtokens.length; i++) {
-        if (gtokens[i].type !== "heading_close") {
+        if (gtokens[i].type !== 'heading_close') {
           continue
         }
         const token = gtokens[i]
         const heading = gtokens[i - 1]
-        if (heading.type === "inline") {
+        if (heading.type === 'inline') {
           headings.push({
             level: +token.tag.substr(1, 1),
             anchor: getAnchor(heading),
-            content: heading.content,
+            content: heading.content
           })
         }
       }
 
-      const tree = {nodes: []}
+      const tree = { nodes: [] }
       // create an ast
       headings.forEach(heading => {
-        if (heading.level < options.tocFirstLevel
-            || heading.level > options.tocLastLevel) {
+        if (heading.level < options.tocFirstLevel || heading.level > options.tocLastLevel) {
           return
         }
 
@@ -267,20 +259,20 @@ export default function(md, options) {
           if (lastItem.nodes.length === 0) {
             lastItem.nodes.push({
               heading: {},
-              nodes: [],
+              nodes: []
             })
           }
           lastItem = lastItem.nodes[lastItem.nodes.length - 1]
         }
         lastItem.nodes.push({
           heading: heading,
-          nodes: [],
+          nodes: []
         })
       })
 
-      return `\n<ul class="${ options.tocClassName }">` +
+      return `\n<ul class="${options.tocClassName}">` +
         treeToString(tree.nodes, options) +
-        "\n</ul>\n"
+        '\n</ul>\n'
     }
   }
 }

@@ -2,11 +2,10 @@ import tape from 'tape'
 import mdIt from './utils/md-it'
 
 tape('markdown-it-github-toc toc', (t) => {
-
   t.equal(
     mdIt(
       '',
-      {toc: true}
+      { toc: true }
     ),
     ``,
     'should works with nothing'
@@ -23,7 +22,7 @@ tape('markdown-it-github-toc toc', (t) => {
   t.equal(
     mdIt(
       '[toc]',
-      {toc: true}
+      { toc: true }
     ),
     `<p>
 <ul class="markdownIt-TOC">
@@ -146,7 +145,7 @@ tape('markdown-it-github-toc toc', (t) => {
       `[toc]
 # Heading
 # Heading`,
-      {toc: true}
+      { toc: true }
     ),
     `<p>
 <ul class="markdownIt-TOC">
@@ -170,7 +169,7 @@ tape('markdown-it-github-toc toc', (t) => {
 # $.lel!
 # $.lel?
 `,
-      {toc: true}
+      { toc: true }
     ),
     `<p>
 <ul class="markdownIt-TOC">
@@ -197,7 +196,7 @@ tape('markdown-it-github-toc toc', (t) => {
 ### a
 # b
 `,
-      {toc: true}
+      { toc: true }
     ),
     `<p>
 <ul class="markdownIt-TOC">
@@ -229,7 +228,7 @@ tape('markdown-it-github-toc toc', (t) => {
 ## SubHeading
 # Heading 2
 ### Deeper Heading`,
-      {toc: true}
+      { toc: true }
     ),
     `<p>
 <ul class="markdownIt-TOC">

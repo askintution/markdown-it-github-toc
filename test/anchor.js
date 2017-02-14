@@ -2,7 +2,6 @@ import tape from 'tape'
 import mdIt from './utils/md-it'
 
 tape('markdown-it-github-toc anchor', (t) => {
-
   t.equal(
     mdIt(
       `[toc](Title)
@@ -10,7 +9,7 @@ tape('markdown-it-github-toc anchor', (t) => {
 # $.lel!
 # $.lel?
 `,
-      {anchorLink: true}
+      { anchorLink: true }
     ),
     `<p><a href="Title">toc</a></p>
 <h1 id="heading"><a class="markdownIt-Anchor" href="#heading">#</a> 'Heading' ?</h1>
