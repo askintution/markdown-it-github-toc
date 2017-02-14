@@ -1,43 +1,43 @@
-import tape from "tape"
-import mdIt from "./utils/md-it"
+import tape from 'tape'
+import mdIt from './utils/md-it'
 
-tape("markdown-it-github-toc toc", (t) => {
+tape('markdown-it-github-toc toc', (t) => {
 
   t.equal(
     mdIt(
-      "",
+      '',
       {toc: true}
     ),
     ``,
-    "should works with nothing"
+    'should works with nothing'
   )
 
   t.equal(
     mdIt(
-      "[toc]"
+      '[toc]'
     ),
     `<p></p>\n`,
-    "should do nothing if not asked to"
+    'should do nothing if not asked to'
   )
 
   t.equal(
     mdIt(
-      "[toc]",
+      '[toc]',
       {toc: true}
     ),
     `<p>
 <ul class="markdownIt-TOC">
 </ul>
 </p>\n`,
-    "should works with no heading"
+    'should works with no heading'
   )
 
   t.equal(
     mdIt(
-      "# heading\n\n[toc]",
+      '# heading\n\n[toc]',
       {
         toc: true,
-        anchorLink: false,
+        anchorLink: false
       }
     ),
     `<h1 id="heading">heading</h1>
@@ -48,22 +48,22 @@ tape("markdown-it-github-toc toc", (t) => {
   </li>
 </ul>
 </p>\n`,
-    "should works with one heading"
+    'should works with one heading'
   )
 
   t.equal(
     mdIt(
-      "[toc]",
+      '[toc]',
       {
         toc: true,
-        tocClassName: "test",
+        tocClassName: 'test'
       }
     ),
     `<p>
 <ul class="test">
 </ul>
 </p>\n`,
-    "should allow custom class"
+    'should allow custom class'
   )
 
   t.equal(
@@ -71,7 +71,7 @@ tape("markdown-it-github-toc toc", (t) => {
       `[toc]
 # 新年快乐`,
       {
-        toc: true,
+        toc: true
       }
     ),
     `<p>
@@ -82,7 +82,7 @@ tape("markdown-it-github-toc toc", (t) => {
 </ul>
 </p>
 <h1 id="新年快乐">新年快乐</h1>\n`,
-    "should support unicode headings"
+    'should support unicode headings'
   )
 
   t.equal(
@@ -92,10 +92,10 @@ tape("markdown-it-github-toc toc", (t) => {
       {
         toc: true,
         anchorLink: true,
-        anchorClassName: "anchor",
-        anchorLinkSymbol: "",
-        anchorLinkSymbolClassName: "octicon octicon-link",
-        anchorLinkSpace: false,
+        anchorClassName: 'anchor',
+        anchorLinkSymbol: '',
+        anchorLinkSymbolClassName: 'octicon octicon-link',
+        anchorLinkSpace: false
       }
     ),
     `<p>
@@ -107,7 +107,7 @@ tape("markdown-it-github-toc toc", (t) => {
 </p>
 <h1 id="heading"><a class="anchor" href="#heading">` +
     `<span class="octicon octicon-link"></span></a>Heading</h1>\n`,
-    "should support GitHub style anchor link"
+    'should support GitHub style anchor link'
   )
 
   t.equal(
@@ -119,7 +119,7 @@ tape("markdown-it-github-toc toc", (t) => {
 # One`,
       {
         toc: true,
-        tocFirstLevel: 2,
+        tocFirstLevel: 2
       }
     ),
     `<p>
@@ -138,7 +138,7 @@ tape("markdown-it-github-toc toc", (t) => {
 <h2 id="two">Two</h2>
 <h3 id="three">Three</h3>
 <h1 id="one">One</h1>\n`,
-    "should works when skipping first level"
+    'should works when skipping first level'
   )
 
   t.equal(
@@ -160,7 +160,7 @@ tape("markdown-it-github-toc toc", (t) => {
 </p>
 <h1 id="heading">Heading</h1>
 <h1 id="heading-2">Heading</h1>\n`,
-    "should works with smiliar levels and similar titles"
+    'should works with smiliar levels and similar titles'
   )
 
   t.equal(
@@ -172,7 +172,7 @@ tape("markdown-it-github-toc toc", (t) => {
 `,
       {toc: true}
     ),
-  `<p>
+    `<p>
 <ul class="markdownIt-TOC">
   <li>
     <a href="#heading">'Heading' ?</a>
@@ -188,7 +188,7 @@ tape("markdown-it-github-toc toc", (t) => {
 <h1 id="heading">'Heading' ?</h1>
 <h1 id="lel">$.lel!</h1>
 <h1 id="lel-2">$.lel?</h1>\n`,
-    "should works with special chars"
+    'should works with special chars'
   )
 
   t.equal(
@@ -219,7 +219,7 @@ tape("markdown-it-github-toc toc", (t) => {
 </p>
 <h3 id="a">a</h3>
 <h1 id="b">b</h1>\n`,
-    "should works when not starting with h1"
+    'should works when not starting with h1'
   )
 
   t.equal(
@@ -259,7 +259,7 @@ tape("markdown-it-github-toc toc", (t) => {
 <h2 id="subheading">SubHeading</h2>
 <h1 id="heading-2">Heading 2</h1>
 <h3 id="deeper-heading">Deeper Heading</h3>\n`,
-    "should works"
+    'should works'
   )
 
   t.end()

@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-github-toc",
-  "version": "3.2.0",
+  "version": "3.2.2",
   "description": "markdown-it plugin to add toc and anchor links in headings",
   "keywords": [
     "makrdown-it",
@@ -12,24 +12,24 @@
   "author": "Tyler Long",
   "license": "MIT",
   "repository": "https://github.com/tylingsoft/markdown-it-github-toc.git",
-  "main": "dist/index.js",
+  "main": "src/index.bundle.js",
   "dependencies": {
     "uslug": "^1.0.4"
   },
   "devDependencies": {
-    "babel-cli": "^6.22.2",
-    "babel-preset-es2015": "^6.22.0",
-    "babel-preset-stage-0": "^6.22.0",
-    "babel-tape-runner": "^2.0.1",
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-env": "^1.1.8",
     "markdown-it": "^8.2.2",
     "npm-check-updates": "^2.10.2",
     "standard": "^8.6.0",
-    "tape": "^4.6.3"
+    "tape": "^4.6.3",
+    "webpack": "^2.2.1"
   },
   "scripts": {
-    "tape": "babel-tape-runner 'test/*.js'",
-    "test": "npm run tape",
-    "prepublish": "babel --ignore test src --out-dir dist",
+    "build": "webpack --progress --colors --watch",
+    "test": "tape 'test/*.bundle.js'",
     "upgrade": "ncu -ua && yarn upgrade"
   }
 }

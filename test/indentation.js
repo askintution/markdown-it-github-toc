@@ -1,7 +1,7 @@
-import tape from "tape"
-import mdIt from "./utils/md-it"
+import tape from 'tape'
+import mdIt from './utils/md-it'
 
-tape("markdown-it-github-toc option: indentation", (t) => {
+tape('markdown-it-github-toc option: indentation', (t) => {
   t.equal(
     mdIt(
       `[toc]
@@ -9,7 +9,7 @@ tape("markdown-it-github-toc option: indentation", (t) => {
 `,
       {
         toc: true,
-        indentation: "",
+        indentation: ''
       }
     ),
     `<p>
@@ -20,7 +20,7 @@ tape("markdown-it-github-toc option: indentation", (t) => {
 </ul>
 </p>
 <h1 id="heading-1">Heading 1</h1>\n`,
-    "should works with no indentation"
+    'should works with no indentation'
   )
 
   t.end()
