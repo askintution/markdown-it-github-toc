@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-github-toc",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "description": "markdown-it plugin to add toc and anchor links in headings",
   "keywords": [
     "makrdown-it",
@@ -18,14 +18,15 @@
   },
   "devDependencies": {
     "babel-core": "^6.23.1",
-    "babel-loader": "^6.3.0",
+    "babel-loader": "^6.3.2",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-preset-env": "^1.1.8",
-    "markdown-it": "^8.2.2",
-    "npm-check-updates": "^2.10.2",
-    "standard": "^8.6.0",
+    "babel-preset-env": "^1.1.11",
+    "markdown-it": "^8.3.0",
+    "npm-check-updates": "^2.10.3",
+    "standard": "^9.0.0",
     "tape": "^4.6.3",
-    "webpack": "^2.2.1"
+    "webpack": "^2.2.1",
+    "webpack-node-externals": "^1.5.4"
   },
   "scripts": {
     "build": "webpack --progress --colors --watch",

@@ -1,6 +1,6 @@
-const rules = []
+const nodeExternals = require('webpack-node-externals')
 
-rules.push({
+const rules = [{
   test: /\.js$/,
   use: {
     loader: 'babel-loader',
@@ -17,10 +17,11 @@ rules.push({
       ]
     }
   }
-})
+}]
 
 const config = {
   target: 'node',
+  externals: [nodeExternals()],
   entry: {
     'src/index': './src/index.js',
     'test/anchor': './test/anchor.js',
