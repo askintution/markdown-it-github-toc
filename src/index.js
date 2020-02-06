@@ -151,7 +151,7 @@ export default function (md, options) {
   })
 
   md.inline.ruler.after(
-    'emphasis',
+    'link',
     'toc',
     (state, silent) => {
       let token
